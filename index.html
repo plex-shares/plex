@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adamine Streams - Premium Plex Share | Jellyfin Share | Emby Share | Media Streaming Service</title>
+    <meta name="description" content="Adamine Streams - Premium Plex share, Jellyfin share, and Emby share service. HD and 4K streaming with 10,000+ movies and 2,300+ TV shows. Fast requests, 3Gbps servers, free trial available.">
+    <meta name="keywords" content="plex share, jellyfin share, emby share, media share, streaming service, 4k streaming, plex server, jellyfin server, emby server, media streaming, movie streaming, tv show streaming">
+    <meta name="author" content="Adamine Streams">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://adamine.work">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Adamine Streams - Premium Media Streaming Service">
+    <meta property="og:description" content="Premium Plex, Jellyfin, and Emby share. HD & 4K content. 10,000+ movies, 2,300+ TV shows. Free 24hr trial.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://adamine.work">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Adamine Streams - Premium Media Streaming">
+    <meta name="twitter:description" content="Premium Plex, Jellyfin, and Emby share. HD & 4K streaming. Free trial available.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.4);
+            --text-primary: #f0f0f5;
+            --text-secondary: #9090a0;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        .click-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+        
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(99, 102, 241, 0.15), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.1), transparent),
+                radial-gradient(ellipse 50% 30% at 50% 100%, rgba(99, 102, 241, 0.08), transparent);
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .cta-hint {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; border-color: var(--accent); }
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .hero {
+            margin-bottom: 4rem;
+        }
+        
+        h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+        
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+            transform: translateY(-4px);
+        }
+        
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 4rem;
+            flex-wrap: wrap;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4rem;
+        }
+        
+        .stat {
+            text-align: left;
+        }
+        
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .platforms {
+            margin-bottom: 3rem;
+        }
+        
+        .platforms h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .platform-list {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .platform {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .platform:hover {
+            opacity: 1;
+        }
+        
+        .pricing-teaser {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .pricing-teaser h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-teaser .price {
+            font-family: 'Space Mono', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .pricing-teaser .price span {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        .pricing-teaser p {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+        
+        footer {
+            padding: 2rem 4rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        .seo-content {
+            max-width: 900px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+        
+        .seo-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .seo-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            header, main, footer {
+                padding: 1.5rem;
+            }
+            
+            .stats {
+                gap: 2rem;
+            }
+            
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="https://store.adamine.work" class="click-overlay" aria-label="Visit Adamine Streams Store"></a>
+    <div class="noise"></div>
+    <div class="gradient-bg"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">ADAMINE<span>.</span>STREAMS</div>
+            <div class="cta-hint">Click anywhere to get started</div>
+        </header>
+        
+        <main>
+            <div class="hero">
+                <h1>Premium <span class="highlight">Media Streaming</span> Service</h1>
+                <p class="subtitle">The best Plex share, Jellyfin share, and Emby share service. Unlimited movies and TV shows in HD and 4K quality.</p>
+            </div>
+            
+            <div class="features">
+                <article class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast Requests</h3>
+                    <p>Request any movie or TV show and it's added to the library in under 60 seconds with our automated system.</p>
+                </article>
+                
+                <article class="feature">
+                    <div class="feature-icon">🎬</div>
+                    <h3>Massive Library</h3>
+                    <p>Access over 10,000 movies and 2,300 TV shows. New content added daily to our Plex, Jellyfin, and Emby servers.</p>
+                </article>
+                
+                <article class="feature">
+                    <div class="feature-icon">📺</div>
+                    <h3>Multiple Platforms</h3>
+                    <p>Choose your preferred media server - Plex share, Jellyfin share, or Emby share. All included with your subscription.</p>
+                </article>
+                
+                <article class="feature">
+                    <div class="feature-icon">🌐</div>
+                    <h3>3Gbps Servers</h3>
+                    <p>US-based dedicated servers with 3Gbps bandwidth. Buffer-free streaming for HD and 4K content.</p>
+                </article>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">10,000+</div>
+                    <div class="stat-label">Movies</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">2,300+</div>
+                    <div class="stat-label">TV Shows</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">1PB+</div>
+                    <div class="stat-label">Storage</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">3Gbps</div>
+                    <div class="stat-label">Bandwidth</div>
+                </div>
+            </div>
+            
+            <div class="platforms">
+                <h2>Available Platforms</h2>
+                <div class="platform-list">
+                    <span class="platform">Plex</span>
+                    <span class="platform">Jellyfin</span>
+                    <span class="platform">Emby</span>
+                </div>
+            </div>
+            
+            <div class="pricing-teaser">
+                <h2>Starting at</h2>
+                <div class="price">$6.50<span>/month</span></div>
+                <p>Free 24-hour trial available • No commitment required</p>
+            </div>
+            
+            <section class="seo-content">
+                <h2>Premium Plex Share & Jellyfin Share Service</h2>
+                <p>Adamine Streams offers the best Plex share, Jellyfin share, and Emby share experience available. Our premium media streaming service provides access to an extensive library of movies and TV shows in both HD 1080p and 4K UHD quality. Whether you're looking for a reliable Plex server share, a Jellyfin share with fast requests, or an Emby share with buffer-free streaming, we've got you covered.</p>
+                
+                <h2>Why Choose Our Media Share Service?</h2>
+                <p>Unlike other media share and streaming services, Adamine Streams features an automated request system that adds new content in under 60 seconds. Our 3Gbps dedicated servers ensure smooth playback for all users. With support for 3 concurrent streams, downloads for offline viewing, and live TV options, our Plex share service delivers everything you need for premium entertainment. Try our free 24-hour trial and experience the difference a quality media streaming service makes.</p>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Adamine Streams. Premium Plex Share, Jellyfin Share & Emby Share Service.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Redirect on any click
+        document.body.addEventListener('click', function(e) {
+            window.location.href = 'https://store.adamine.work';
+        });
+    </script>
+</body>
+</html>
